@@ -1,0 +1,76 @@
+from p5 import *
+
+# Variables globales
+a = 0
+b = 0
+pacman_x = 50
+pacman_y = 200
+boules = [[150, 200], [250, 200], [350, 200]]  # Positions des boules
+super_boule = [400, 200]  # Position de la super boule (alignée avec les autres)
+current_target = 0  # Indice de la boule ciblée
+super_mode = False  # Indique si Pac-Man a mangé la super boule
+
+def setup():
+    size(450, 400)  # Largeur augmentée pour inclure la super boule
+    no_stroke()
+
+def draw():
+    global a, b, pacman_x, pacman_y, current_target, super_mode
+
+    background(220)
+
+    # Animation de Pac-Man
+    fill(255, 255, 0)
+    circle(pacman_x, pacman_y, 50)  # Corps
+    fill(0)
+    circle(pacman_x, pacman_y - 12.5, 5)  # Oeil
+    fill(220)
+    triangle(
+        pacman_x, pacman_y,
+        pacman_x + 25, pacman_y - 17.5 + a,
+        pacman_x + 25, pacman_y + 17.5 + b
+    )
+    a += 1
+    b -= 1
+    if a == 70:
+        a = 0
+        b = 0
+
+    # Déplacement automatique vers les boules ou la super boule
+    target_x, target_y = None, None
+    if current_target < len(boules):  # Si des boules classiques restent
+        target_x, target_y = boules[current_target]
+    elif not super_mode:  # Si la super boule n'a pas été mangée
+        target_x, target_y = super_boule
+
+    if target_x is not None:
+        if pacman_x < target_x:
+            pacman_x += 2  # Déplacement vers la droite
+        elif pacman_x > target_x:
+            pacman_x -= 2  # Déplacement vers la gauche
+
+        if pacman_y < target_y:
+            pacman_y += 2  # Déplacement vers le bas
+        elif pacman_y > target_y:
+            pacman_y -= 2  # Déplacement vers le haut
+
+        # Si Pac-Man atteint une boule classique
+        if current_target < len(boules) and distance((pacman_x, pacman_y), (target_x, target_y)) < 25 + 10:
+            current_target += 1  # Passer à la prochaine boule
+
+        # Si Pac-Man atteint la super boule
+        if not super_mode and distance((pacman_x, pacman_y), (super_boule[0], super_boule[1])) < 25 + 15:
+            super_mode = True  # Activer le mode super
+
+    # Dessiner les boules restantes
+    for i in range(current_target, len(boules)):
+        boule_x, boule_y = boules[i]
+        fill(255, 0, 0)
+        circle(boule_x, boule_y, 13)
+
+    # Dessiner la super boule si elle n'est pas encore mangée
+    if not super_mode:
+        fill(0, 0, 255)
+        circle(super_boule[0], super_boule[1], 30)
+
+run()
