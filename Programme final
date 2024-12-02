@@ -1,0 +1,169 @@
+from p5 import *
+
+ # Variables globales
+#pac man
+aPA = 0
+bPA = 0
+cPA = -3
+x = 1
+positionXPA = 100
+positionYPA = 200
+#phantome 1
+positionXPH1 = 25
+positionYPH1 = 195
+aPH1 = positionXPH1-46
+#phantom 2
+positionXPH2 = -50
+positionYPH2 = 195
+aPH2 = positionXPH2-46
+#phantom 3
+positionXPH3 = -125 
+positionYPH3 = 195
+aPH3 = positionXPH3-46
+bouleX1 = 150
+bouleY1 = 200
+bouleX2 = 250
+bouleY2 = 200
+bouleX3 = 350
+bouleY3 = 200
+current_target = 0  # Indice de la boule ciblée
+
+def setup():
+    size(400, 400)
+    no_stroke()
+
+def draw():
+    global aPA, bPA, cPA, positionXPA, positionYPA, current_target, positionXPH1, positionYPH1, positionXPH2, positionYPH2, positionXPH3, positionYPH3,aPH1, aPH2, aPH3
+    global x 
+
+    background(0)  # Couleur de fond (noir)
+
+    for i in range(int(random_uniform(15, 40))):  # Nombre d'étoiles aléatoire
+        fill(255, 255, 255)  # Couleur blanche pour les étoiles
+        ellipse(random_uniform(0, 400), random_uniform(0, 400), 5, 5)  # Position aléatoire des étoiles
+
+    # Animation de Pac-Man
+    # Corps de Pac-Man
+    fill(255, 255, 0)                # Couleur de Pac-Man
+    circle(positionXPA, positionYPA, 75)  # Forme de Pac-Man 
+
+    # Yeux
+    fill(0)
+    circle(positionXPA + cPA, positionYPA - 20, 7)  # Yeux de Pac-Man
+
+    # Bouche ouvre/ferme
+    fill(0)                        # Couleur bouche
+    triangle(positionXPA, positionYPA, positionXPA + 38, positionYPA - 50 + aPA, positionXPA + 38, positionYPA + 50 + bPA)
+
+
+
+
+
+    # Dessiner les boules restantes
+    fill(255,0,0)
+    #boule 1
+    if positionXPA < 130 : 
+        circle(bouleX1, bouleY1, 20) 
+    #boule 2
+    if positionXPA < 230 : 
+        circle(bouleX2, bouleY2, 20) 
+    #boule 3
+    if positionXPA < 330 : 
+        circle(bouleX3, bouleY3, 20) 
+
+
+    # Corps du fantôme 1
+    fill(0, 150, 255)          # Couleur bleu du fantôme
+    circle(positionXPH1, positionYPH1, 60)  # Tête
+    rect(positionXPH1 - 30, positionYPH1, 60, 50)      # Bas du corps
+
+    # Dentelures en bas du corps
+    fill(0)  # Couleur de fond pour créer les vagues
+    for i in range(6):
+        circle(aPH1 + i * 15, positionYPH1 + 48, 16)  # Cercles en bas
+
+    # Yeux du fantôme
+    fill(255)  # Blanc pour les yeux
+    ellipse((positionXPH1 - 12, positionYPH1 - 5), 12, 18)  # Oeil gauche
+    ellipse((positionXPH1 + 12, positionYPH1 - 5), 12, 18)  # Oeil droit
+
+    # Pupilles
+    fill(0)  # Noir pour les pupilles
+    ellipse((positionXPH1 - 10, positionYPH1 - 5), 5, 5)  # Pupille gauche
+    ellipse((positionXPH1 + 14, positionYPH1 - 5), 5, 5)  # Pupille droite
+
+
+        # Corps du fantôme 2
+    fill(255, 0, 0)          # Couleur bleu du fantôme
+    circle(positionXPH2, positionYPH2, 60)  # Tête
+    rect(positionXPH2 - 30, positionYPH2, 60, 50)      # Bas du corps
+
+    # Dentelures en bas du corps
+    fill(0)  # Couleur de fond pour créer les vagues
+    for i in range(6):
+        circle(aPH2 + i * 15, positionYPH2 + 48, 16)  # Cercles en bas
+    # Yeux du fantôme
+    fill(255)  # Blanc pour les yeux
+    ellipse((positionXPH2 - 12, positionYPH2 - 5), 12, 18)  # Oeil gauche
+    ellipse((positionXPH2 + 12, positionYPH2 - 5), 12, 18)  # Oeil droit
+
+    # Pupilles
+    fill(0)  # Noir pour les pupilles
+    ellipse((positionXPH2 - 10, positionYPH2 - 5), 5, 5)  # Pupille gauche
+    ellipse((positionXPH2 + 14, positionYPH2 - 5), 5, 5)  # Pupille droite
+
+
+        # Corps du fantôme 3
+    fill(255,192,203)          # Couleur bleu du fantôme
+    circle(positionXPH3, positionYPH3, 60)  # Tête
+    rect(positionXPH3 - 30, positionYPH3, 60, 50)      # Bas du corps
+
+    # Dentelures en bas du corps
+    fill(0)  # Couleur de fond pour créer les vagues
+    for i in range(6):
+        circle(aPH3 + i * 15, positionYPH3 + 48, 16)  # Cercles en bas
+    # Yeux du fantôme
+    fill(255)  # Blanc pour les yeux
+    ellipse((positionXPH3 - 12, positionYPH3 - 5), 12, 18)  # Oeil gauche
+    ellipse((positionXPH3 + 12, positionYPH3 - 5), 12, 18)  # Oeil droit
+
+    # Pupilles
+    fill(0)  # Noir pour les pupilles
+    ellipse((positionXPH3 - 10, positionYPH3 - 5), 5, 5)  # Pupille gauche
+    ellipse((positionXPH3 + 14, positionYPH3 - 5), 5, 5)  # Pupille droite
+
+
+
+
+    if aPA == 11 or aPA == 21 or aPA == 31 or aPA == 41 or aPA == 51 :
+        cPA = cPA + 1
+    if aPA == 61 or aPA == 71 or aPA == 81 or aPA == 91 or aPA == 100 : 
+        cPA = cPA - 1
+    aPA = aPA + 1
+    bPA = bPA - 1
+    if aPA == 101:
+        aPA = 0
+        bPA = 0
+
+    aPH1 = aPH1 + 2
+    if aPH1 == positionXPH1-30:
+        aPH1 = positionXPH1-46
+    
+    aPH2 = aPH2 + 2
+    if aPH2 == positionXPH2-30:
+        aPH2 = positionXPH2-46
+    
+    aPH3 = aPH3 + 2
+    if aPH3 == positionXPH3-30:
+        aPH3 = positionXPH3-46
+
+    #déplacement
+    #pac man
+    positionXPA = positionXPA + 1
+    #phantom 1
+    positionXPH1 = positionXPH1 + 1
+    #phantom 2
+    positionXPH2 = positionXPH2 + 1
+    #phantom 3
+    positionXPH3 = positionXPH3 + 1
+run() 
