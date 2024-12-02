@@ -44,16 +44,19 @@ def draw():
 
     # Animation de Pac-Man
     # Corps de Pac-Man
-    fill(255, 255, 0)                # Couleur de Pac-Man
-    circle(positionXPA, positionYPA, 75)  # Forme de Pac-Man 
+    if positionXPH1 < 300:
+        fill(255, 255, 0)                # Couleur de Pac-Man
+        circle(positionXPA, positionYPA, 75)  # Forme de Pac-Man 
 
-    # Yeux
-    fill(0)
-    circle(positionXPA + cPA, positionYPA - 20, 7)  # Yeux de Pac-Man
+        # Yeux
+        fill(0)
+        circle(positionXPA + cPA, positionYPA - 20, 7)  # Yeux de Pac-Man
 
-    # Bouche ouvre/ferme
-    fill(0)                        # Couleur bouche
-    triangle(positionXPA, positionYPA, positionXPA + 38, positionYPA - 50 + aPA, positionXPA + 38, positionYPA + 50 + bPA)
+        # Bouche ouvre/ferme
+        fill(0)                        # Couleur bouche
+        triangle(positionXPA, positionYPA, positionXPA + 38, positionYPA - 50 + aPA, positionXPA + 38, positionYPA + 50 + bPA)
+
+
 
 
 
@@ -159,7 +162,8 @@ def draw():
 
     #déplacement
     #pac man
-    positionXPA = positionXPA + 1
+    if positionXPA < 350:
+        positionXPA = positionXPA + 1
     #phantom 1
     positionXPH1 = positionXPH1 + 1
     #phantom 2
